@@ -2,34 +2,53 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+int elements2 [10] = {
+	0b00111111, //0
+	0b00000110, //1
+	0b01011011, //2
+	0b01001111, //3
+	0b01100110, //4
+	0b01101101, //5
+	0b01111101, //6
+	0b00000111, //7
+	0b01111111, //8
+	0b01101111 //9
+	};                   
+	
+int elements16 [10]= {
+	0x3f, //0
+	0x6,  //1
+	0x5b, //2
+	0x4f, //3
+	0x66, //4
+	0x6d, //5
+	0x7d, //6
+	0x7,  //7
+	0x7f, //8
+	0x6f  //9
+};
+
 
 int main(void)
 {
 
-	DDRA = 0b11111111;
+	DDRA = 0b11111111; 
+	DDRB = 0b00000011; // button
 
     while (1) 
     {
-		PORTA=0b00111111; //0
-		_delay_ms(1000);
-		PORTA=0b00000110; //1
-		_delay_ms(1000);
-		PORTA=0b01011011; //2
-		_delay_ms(1000);
-		PORTA=0b01001111; //3
-		_delay_ms(1000);
-		PORTA=0b01100110; //4
-		_delay_ms(1000);
-		PORTA=0b01101101; //5
-		_delay_ms(1000);
-		PORTA=0b01111101; //6
-		_delay_ms(1000);
-		PORTA=0b00000111; //7
-		_delay_ms(1000);
-		PORTA=0b01111111; //8
-		_delay_ms(1000);
-		PORTA=0b01101111; //9
-		_delay_ms(1000);
+	PORTA = elements16[z];
 		
+		if(PINB == 0b00000010){
+			z++;
+			_delay_ms(300);
+			if(z>9) z=0;
+		}
+		
+		if(PINB == 0b00000001){
+			z--; 
+			_delay_ms(300);
+			if(z<0) z=9;
+		} 	
     }
 }
