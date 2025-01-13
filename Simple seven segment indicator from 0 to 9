@@ -1,6 +1,7 @@
 #define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
+int z =0;
 
 int elements2 [10] = {
 	0b00111111, //0
