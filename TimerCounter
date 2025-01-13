@@ -1,0 +1,34 @@
+#define F_CPU 8000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+int y = 0;
+
+int main(void)
+{
+	DDRC  = 0b11111111;
+	PORTC = 0b00000000;
+	TCCR0 = 0b00000101; // 8MHz/1024
+	TCNT0 = 0; // 0...255  //The Timer/Counter Register gives direct access, both for read and write operations, to the Timer/Counter unit 8-bit counter.
+	
+while (1) 
+    {
+		
+		if(TCNT0 == 255 )
+		{	
+			y++;
+			TCNT0 = 0;
+		}
+		
+		if(y == 30){
+			PORTC = 0b00001010;
+		}
+		if(y == 60){
+			PORTC = 0b00001111;
+		}
+		
+		if(y>60){
+			y=0;
+		}
+
+}
+}
