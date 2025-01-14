@@ -1,0 +1,90 @@
+#define F_CPU 8000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+
+ISR(INT0_vect){
+	PORTD |= (1<<0);
+	_delay_ms(150);
+	PORTD &=~(1<<0);
+	_delay_ms(150);
+	
+	PORTD |= (1<<0);
+	_delay_ms(150);
+	PORTD &=~(1<<0);
+	_delay_ms(150);
+	
+	PORTD |= (1<<0);
+	_delay_ms(150);
+	PORTD &=~(1<<0);
+	_delay_ms(150);
+	
+	PORTD |= (1<<0);
+	_delay_ms(150);
+	PORTD &=~(1<<0);
+	_delay_ms(150);
+	
+	PORTD |= (1<<0);
+	_delay_ms(150);
+	PORTD &=~(1<<0);
+	_delay_ms(150);
+}
+
+
+int main(void)
+{ 
+	GICR  = 0b11000000; // включаем внешние прерывания
+	MCUCR = 0b00000010; // режим срабатывания внешнего прерывания по спаду или нарастанию	
+	SREG |= (1<<7);    // разрешить глобальное прерывания
+	
+	DDRC =  0b11111111;
+	PORTC = 0b00000000;
+	
+	DDRD  |=(1<<0);
+	PORTD &=~(1<<0);
+	
+	DDRD &=~((1<<2) | (1<<7));
+	PORTD |= (1<<2) | (1<<7);
+	
+	while(1)
+	{
+		PORTC = 0b00000001;
+		_delay_ms(350);
+		PORTC = 0b00000011;
+		_delay_ms(350);
+		PORTC = 0b00000111;
+		_delay_ms(350);
+		PORTC = 0b00001111;
+		_delay_ms(350);
+		
+		if(~PIND & (1<<7)){
+			PORTD |= (1<<0);
+			_delay_ms(150);
+			PORTD &=~(1<<0);
+			_delay_ms(150);
+			
+			PORTD |= (1<<0);
+			_delay_ms(150);
+			PORTD &=~(1<<0);
+			_delay_ms(150);
+			
+			PORTD |= (1<<0);
+			_delay_ms(150);
+			PORTD &=~(1<<0);
+			_delay_ms(150);
+			
+			PORTD |= (1<<0);
+			_delay_ms(150);
+			PORTD &=~(1<<0);
+			_delay_ms(150);
+			
+			PORTD |= (1<<0);
+			_delay_ms(150);
+			PORTD &=~(1<<0);
+			_delay_ms(150);
+		}
+		
+	}
+		
+}
+
